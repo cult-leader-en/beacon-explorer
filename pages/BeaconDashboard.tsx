@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import StatCard from './StatCard';
+import { Leaf, Users, TrendingUp, Vote, DollarSign, Settings, Globe, Activity, Clock } from 'lucide-react';
+import React, { useState } from 'react';
 import {
   Leaf,
   Users,
