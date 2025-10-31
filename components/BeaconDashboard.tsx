@@ -1,22 +1,8 @@
-import StatCard from './StatCard';
-import { Leaf, Users, TrendingUp, Vote, DollarSign, Settings, Globe, Activity, Clock } from 'lucide-react';
-import React, { useState } from 'react';
-import {
-  Leaf,
-  Users,
-  TrendingUp,
-  Vote,
-  DollarSign,
-  Settings,
-  Globe,
-  Activity,
-  Clock,
-  ArrowUpRight,
-} from "lucide-react";
+import React, { useState } from "react";
+import StatCard from "./StatCard";
+import { Leaf, Users, TrendingUp, Vote, DollarSign, Settings, Globe, Activity, Clock } from "lucide-react";
 
-// --------------------
-// MOCK DATA (simulate blockchain state)
-// --------------------
+// MOCK DATA (same as you had)
 const pods = [
   { id: 1, name: "Green Valley Commons", location: "Portland, OR", members: 42, deposited: 87500, yieldEarned: 4235.5, apy: 5.8, recentActivity: "Community garden funding approved" },
   { id: 2, name: "Solar Solidarity Network", location: "Barcelona, ES", members: 58, deposited: 126400, yieldEarned: 7156.8, apy: 6.2, recentActivity: "Solar panel installation vote passing" },
@@ -35,21 +21,14 @@ const yieldStrategies = [
   { name: "Yearn Finance", allocation: 10, apy: 6.8, tvl: 284739 },
 ];
 
-// Simulated totals
 const totalYieldGenerated = 156483.2;
 const totalTVL = pods.reduce((sum, pod) => sum + pod.deposited, 0);
 let collectivePool = (totalYieldGenerated * 0.15).toFixed(2);
 let protocolReserve = (totalYieldGenerated * 0.05).toFixed(2);
 
-// --------------------
-// COMPONENT
-// --------------------
-const BeaconDashboard = () => {
+const BeaconDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
-  // --------------------
-  // Simulate yield distribution
-  // --------------------
   const distributeYield = () => {
     pods.forEach((pod) => {
       pod.yieldEarned += ((pod.deposited / totalTVL) * totalYieldGenerated * 0.8);
@@ -59,9 +38,6 @@ const BeaconDashboard = () => {
     alert("Yield distributed! 80% → Pods, 15% → Collective Pool, 5% → Protocol Reserve");
   };
 
-  // --------------------
-  // Tabs
-  // --------------------
   const OverviewTab = () => (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -182,7 +158,6 @@ const BeaconDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-700 to-cyan-600 text-white">
-      {/* Header */}
       <header className="bg-white/10 backdrop-blur-md border-b border-white/20 px-6 py-6">
         <div className="flex justify-between items-center">
           <h1 className="text-4xl font-bold flex items-center gap-3">
@@ -194,7 +169,6 @@ const BeaconDashboard = () => {
         </div>
       </header>
 
-      {/* Navigation */}
       <nav className="bg-white/10 backdrop-blur-md border-b border-white/20">
         <div className="flex gap-1 px-6">
           {[
@@ -213,7 +187,6 @@ const BeaconDashboard = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
         {activeTab === "overview" && <OverviewTab />}
         {activeTab === "pods" && <PodsTab />}
@@ -222,16 +195,5 @@ const BeaconDashboard = () => {
     </div>
   );
 };
-
-// --------------------
-// STAT CARD
-// --------------------
-const StatCard = ({ icon, label, value, gradient }) => (
-  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border-2 border-green-200 hover:scale-105 transition-transform text-black">
-    <div className={`w-12 h-12 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center mb-3`}>{icon}</div>
-    <div className="text-sm text-emerald-600 mb-1">{label}</div>
-    <div className="text-2xl font-bold text-emerald-900">{value}</div>
-  </div>
-);
 
 export default BeaconDashboard;
